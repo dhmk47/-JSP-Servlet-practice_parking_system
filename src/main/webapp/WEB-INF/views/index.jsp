@@ -15,13 +15,6 @@
 			<div>
 				<h1 class="fa-solid fa-square-parking header-logo"></h1>
 			</div>
-			<nav>
-				<ul>
-					<li>차량 등록</li>
-					<li>내 정보 보기</li>
-					<li>결제하기</li>
-				</ul>
-			</nav>
 		</header>
 		<main>
 			<div>
@@ -29,6 +22,23 @@
 				<p>차량을 간편하게 등록하고 등록된 건물의 출입을 편리하게 할 수 있습니다.</p>
 				<span>자세히 보기...</span>
 			</div>
+			<form action="">
+				<section>
+					<div class="button-box">
+						<div class="registration-box">
+							<label for="car-number">차량번호</label>
+							<input type="text" id="car-number">
+						</div>
+						<button type="button">차량 등록</button>
+					</div>
+					<div>
+						<button type="button">내 정보 보기</button>
+					</div>
+					<div>
+						<button type="button">결제하기</button>
+					</div>
+				</section>
+			</form>
 		</main>
 		<footer>
 			<nav>
