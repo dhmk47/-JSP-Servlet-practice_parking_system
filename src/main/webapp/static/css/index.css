@@ -50,7 +50,7 @@ main div h1 {
 	font-weight: 500;
 }
 
-main div span {
+.show-dtl {
 	margin-bottom: 10px;
 	cursor: pointer;
 	
@@ -63,6 +63,7 @@ section {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	
 }
 
 button {
@@ -75,22 +76,68 @@ button {
 	justify-content: center;
 	align-items: center;
 	
-	width: 100px;
-	height: 100px;
+	transition-property: width, height;
+	transition-duration: 3s, 3s;
 }
 
 .registration-box {
 	display: none;
+	/* transition-property: width, height;
+	transition-duration: 3s, 3s; */
 	width: 100px;
 	height: 100px;
-	
 	background-color: green;
 }
 
+.add-car {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	
+}
+
+.add-car label {
+	font-size: 20px;
+}
+
+.add-car input {
+	width: 300px;
+	height: 50px;
+}
+
+.select-option {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
+
+.select-option span {
+	margin-left: 20px;
+	font-size: 20px;
+}
+
+.select-option select {
+	width: 300px;
+	height: 50px;
+}
+
 .show-registration-box {
-	display: block;
-	width: 600px;
-	height: 600px;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	width: 400px;
+	height: 400px;
+}
+
+
+.move-div-box-right {
+	transform: translateX(100px);
+}
+
+.move-div-box-left {
+	transform: translateX(-100px);
 }
 
 main div button {
