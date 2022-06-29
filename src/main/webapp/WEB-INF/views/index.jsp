@@ -45,10 +45,19 @@
 						</div>
 						<button type="button" class="btn">차량 등록</button>
 					</div>
-					<div>
+					<div class="button-box">
+						<div class="info-box">
+							<h1>~~님의 정보</h1>
+							<p>등록 차량 번호:&nbsp</p>
+							<p>주차권:&nbsp</p>
+						</div>
 						<button type="button" class="btn">내 정보 보기</button>
 					</div>
-					<div>
+					<div class="button-box">
+						<div class="payment-box">
+							<h1>~~님의 요금현황</h1>
+							<p>지불금액:&nbsp</p>
+						</div>
 						<button type="button" class="btn">결제하기</button>
 					</div>
 				</section>
