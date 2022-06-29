@@ -17,13 +17,27 @@
 			</div>
 		</header>
 		<main>
-			<div>
+			<div class="main-top-box">
 				<h1>주차 관리 시스템입니다.</h1>
 				<p>차량을 간편하게 등록하고 등록된 건물의 출입을 편리하게 할 수 있습니다.</p>
 				<span class="show-dtl">자세히 보기...</span>
 			</div>
-			<form action="">
-				<section>
+			<aside>
+				<div class="login-box">
+					<input type="text" placeholder="아이디" name="username" required>
+					<input type="password" placeholder="비밀번호" name="password" required>
+				</div>
+				<div class="signup-signin-box">
+					<div>
+						<button type="button" class="signup">회원가입</button>
+					</div>
+					<div>
+						<button type="submit" class="signin">로그인</button>
+					</div>
+				</div>
+			</aside>
+			<section>
+				<form action="" method="post">
 					<div class="button-box">
 						<div class="registration-box">
 							<div class="add-car">
@@ -45,23 +59,23 @@
 						</div>
 						<button type="button" class="btn">차량 등록</button>
 					</div>
-					<div class="button-box">
-						<div class="info-box">
-							<h1>~~님의 정보</h1>
-							<p>등록 차량 번호:&nbsp</p>
-							<p>주차권:&nbsp</p>
-						</div>
-						<button type="button" class="btn">내 정보 보기</button>
+				</form>
+				<div class="button-box">
+					<div class="info-box">
+						<h1>~~님의 정보</h1>
+						<p>등록 차량 번호:&nbsp</p>
+						<p>주차권:&nbsp</p>
 					</div>
-					<div class="button-box">
-						<div class="payment-box">
-							<h1>~~님의 요금현황</h1>
-							<p>지불금액:&nbsp</p>
-						</div>
-						<button type="button" class="btn">결제하기</button>
+					<button type="button" class="btn">내 정보 보기</button>
+				</div>
+				<div class="button-box">
+					<div class="payment-box">
+						<h1>~~님의 요금현황</h1>
+						<p>지불금액:&nbsp</p>
 					</div>
-				</section>
-			</form>
+					<button type="button" class="btn">결제하기</button>
+				</div>
+			</section>
 		</main>
 		<footer>
 			<nav>

@@ -40,7 +40,7 @@ main div {
 	justify-content: center;
 }
 
-main > div {
+.main-top-box {
 	margin-bottom: 300px;
 }
 
@@ -59,8 +59,41 @@ main div h1 {
 	color: blue;
 }
 
-form {
-	width: 1000px;
+aside {
+	display: flex;
+	flex-direction: row;
+	position: relative;
+	top: -400px;
+	left: -530px;
+	
+}
+
+.aside-position-move {
+	top: -150px;
+}
+
+.login-box {
+	/* position: relative;
+	left: -150px; */
+}
+
+.login-main-box {
+	display: flex;
+	flex-direction: row;
+	
+}
+
+.signup-signin-box {
+	display: flex;
+	
+}
+
+.signup, .signin {
+	border-radius: 0px;
+}
+
+.signin {
+	left: -450px;
 }
 
 section {
@@ -141,7 +174,7 @@ button {
 }
 
 .move-div-box-left {
-	transform: translateX(-100px);
+	transform: translateX(-150px);
 }
 
 .info-box {
