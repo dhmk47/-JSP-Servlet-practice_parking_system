@@ -38,19 +38,19 @@
 			</aside>
 			<section>
 				<form action="" method="post">
-					<div class="button-box">
+					<div class="button-box btn1">
 						<div class="registration-box">
 							<div class="add-car">
 								<label for="car-number">차량번호:&nbsp</label>
-								<input type="text" id="car-number">
+								<input type="text" id="car-number" name="car-number">
 							</div>
 							<div class="select-option">
 								<span>주차권:&nbsp</span>
-								<select>
-									<option>1일 주차권</option>
-									<option>3일 주차권</option>
-									<option>일주일 주차권</option>
-									<option>한달 주차권</option>
+								<select name="select-option">
+									<option value="1">1일 주차권</option>
+									<option value="2">3일 주차권</option>
+									<option value="3">일주일 주차권</option>
+									<option value="4">한달 주차권</option>
 								</select>
 							</div>
 							<div>
@@ -60,7 +60,7 @@
 						<button type="button" class="btn">차량 등록</button>
 					</div>
 				</form>
-				<div class="button-box">
+				<div class="button-box btn2">
 					<div class="info-box">
 						<h1>~~님의 정보</h1>
 						<p>등록 차량 번호:&nbsp</p>
@@ -68,7 +68,7 @@
 					</div>
 					<button type="button" class="btn">내 정보 보기</button>
 				</div>
-				<div class="button-box">
+				<div class="button-box btn3">
 					<div class="payment-box">
 						<h1>~~님의 요금현황</h1>
 						<p>지불금액:&nbsp</p>

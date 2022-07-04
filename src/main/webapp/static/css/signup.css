@@ -18,6 +18,7 @@ body {
 
 #container {
 	margin-top: 200px;
+	width: 450px;
 }
 
 h1 {
@@ -35,7 +36,7 @@ form {
 	justify-content: space-around;
 	align-items: flex-start;
 	
-	height: 300px;
+	height: 380px;
 }
 
 label {
@@ -77,11 +78,34 @@ button[type="submit"] {
 	margin-left: 10px;
 }
 
-form span {
+
+.password-error {
 	display: none;
+	margin-left: 10px;
 	content: "비밀번호가 다릅니다";
-	font-size: 20px;
+	font-size: 16px;
 	color: red;
+}
+
+.explain-password-box {
+	display: none;
+	position: absolute;
+	top: 453px;
+	left: 930px;
+	border-radius: 5px;
+	background-color: yellow;
+}
+
+main .explain-password {
+	display: inline-block;
+	padding: 0px 15px;
+	
+	font-size: 14px;
+	color: var(--main-font-color);
+}
+
+.show-explain-password-box {
+	display: inline-block;
 }
 
 #email {

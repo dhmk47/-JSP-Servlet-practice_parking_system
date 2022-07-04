@@ -18,6 +18,8 @@ let flag1 = false;
 let flag2 = false;
 let flag3 = false;
 
+let signinFlag = false;
+
 signupBtn.onclick = () => {
 	location.href = "signup";
 }
@@ -78,17 +80,21 @@ showDtl.onclick = () => {
 
 function btn1_click() {
 	registrationBox.classList.toggle("show-registration-box");
-	btnBox[0].classList.add("move-div-box-right");
+	sectionBox.classList.add("section-move-right");
+	btnList[2].classList.add("up-btn-box");
+	/*btnBox[0].classList.add("move-div-box-right");*/
 	/*registrationBox.style.width = "600px";
 	registrationBox.style.height = "600px";*/
-	btnBox[0].style.width = "600px";
-	btnBox[0].style.height = "600px";
+	btnBox[0].style.width = "400px";
+	btnBox[0].style.height = "500px";
 	mainTopBox.style.marginBottom = "50px";
 }
 
 function btn1_click_remove() {
 	registrationBox.classList.remove("show-registration-box");
-	btnBox[0].classList.toggle("move-div-box-right");
+	sectionBox.classList.remove("section-move-right");
+	btnList[2].classList.remove("up-btn-box");
+	/*btnBox[0].classList.toggle("move-div-box-right");*/
 	/*registrationBox.style.width = "600px";
 	registrationBox.style.height = "600px";*/
 	btnBox[0].style.width = "140px";
@@ -98,8 +104,8 @@ function btn1_click_remove() {
 
 function btn2_click() {
 	infoBox.classList.add("show-info-box");
-	btnBox[1].style.width = "600px";
-	btnBox[1].style.height = "600px";
+	btnBox[1].style.width = "400px";
+	btnBox[1].style.height = "500px";
 	mainTopBox.style.marginBottom = "50px";
 }
 
@@ -112,15 +118,22 @@ function btn2_click_remove() {
 
 function btn3_click() {
 	paymentBox.classList.add("show-payment-box");
-	btnBox[2].classList.add("move-div-box-left");
-	btnBox[2].style.width = "600px";
-	btnBox[2].style.height = "600px";
+	sectionBox.classList.add("section-move-left");
+	btnList[0].classList.add("up-btn-box3");
+	btnList[1].classList.add("up-btn-box2");
+	/*btnBox[2].classList.add("move-div-box-left");*/
+	btnBox[2].style.marginLeft = "20px";
+	btnBox[2].style.width = "400px";
+	btnBox[2].style.height = "500px";
 	mainTopBox.style.marginBottom = "50px";
 }
 
 function btn3_click_remove() {
 	paymentBox.classList.remove("show-payment-box");
-	btnBox[2].classList.remove("move-div-box-left");
+	sectionBox.classList.remove("section-move-left");
+	btnList[0].classList.remove("up-btn-box3");
+	btnList[1].classList.remove("up-btn-box2");
+	/*btnBox[2].classList.remove("move-div-box-left");*/
 	btnBox[2].style.width = "140px";
 	btnBox[2].style.height = "50px";
 	mainTopBox.style.marginBottom = "300px";

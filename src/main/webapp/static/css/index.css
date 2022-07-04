@@ -72,6 +72,18 @@ aside {
 	top: -150px;
 }
 
+section {
+	position: relative;
+}
+
+.section-move-right {
+	transform: translateX(100px);
+}
+
+.section-move-left {
+	transform: translateX(-150px);
+}
+
 .login-box {
 	/* position: relative;
 	left: -150px; */
@@ -115,6 +127,23 @@ button {
 	
 	transition-property: width, height;
 	transition-duration: 3s, 3s;
+}
+
+.up-btn-box {
+	position: absolute;
+	top: 160px;
+	left: 400px;
+}
+
+.up-btn-box2 {
+	position: absolute;
+	top: 160px;
+	left: 160px;
+}
+
+.up-btn-box3 {
+	position: absolute;
+	left: 160px;
 }
 
 .registration-box {
@@ -169,13 +198,13 @@ button {
 }
 
 
-.move-div-box-right {
+/* .move-div-box-right {
 	transform: translateX(100px);
 }
 
 .move-div-box-left {
 	transform: translateX(-150px);
-}
+} */
 
 .info-box {
 	display: none;

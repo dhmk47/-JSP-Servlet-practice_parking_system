@@ -1,12 +1,15 @@
 package web.servlet;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import domain.dao.ServiceDao;
+import domain.jdbc.DBConnectionMgr;
 import service.UserService;
 import service.UserServiceImpl;
 import web.dto.SignupReqUserDto;
@@ -17,7 +20,7 @@ public class SignupServlet extends HttpServlet {
 	private final UserService userService;
 	
 	public SignupServlet() {
-		userService = new UserServiceImpl();
+		userService = new UserServiceImpl(new ServiceDao(DBConnectionMgr.getInstance()));
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -26,12 +29,18 @@ public class SignupServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("회원가입 실행");
+		String email = null;
+		if(!request.getParameter("select-email").equals("직접입력")) {
+			email = request.getParameter("email") + request.getParameter("select-email");
+		}else {
+			email = request.getParameter("email");
+		}
 		
 		SignupReqUserDto signupReqUserDto = SignupReqUserDto.builder()
 				.name(request.getParameter("name"))
 				.username(request.getParameter("username"))
 				.password(request.getParameter("password"))
-				.email(request.getParameter("email"))
+				.email(email)
 				.build();
 		
 		try {
