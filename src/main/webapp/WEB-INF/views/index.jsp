@@ -25,6 +25,9 @@
 			</div>
 			<aside>
 				<div class="login-box">
+					<div class="error-msg">
+						<span>로그인을 먼저 진행해 주세요</span>
+					</div>
 					<input type="text" class="username" placeholder="아이디" name="username" required>
 					<input type="password" class="password" placeholder="비밀번호" name="password" required>
 				</div>
@@ -61,7 +64,7 @@
 								<button type="submit">등록하기</button>
 							</div>
 						</div>
-						<button type="button" class="btn">차량 등록</button>
+						<button type="button" class="btn register-car-btn">차량 등록</button>
 					</div>
 				</form>
 				<div class="button-box btn2">
@@ -70,14 +73,14 @@
 						<p>등록 차량 번호:&nbsp</p>
 						<p>주차권:&nbsp</p>
 					</div>
-					<button type="button" class="btn">내 정보 보기</button>
+					<button type="button" class="btn show-my-info-btn">내 정보 보기</button>
 				</div>
 				<div class="button-box btn3">
 					<div class="payment-box">
 						<h1>~~님의 요금현황</h1>
 						<p>지불금액:&nbsp</p>
 					</div>
-					<button type="button" class="btn">결제하기</button>
+					<button type="button" class="btn pay-btn">결제하기</button>
 				</div>
 			</section>
 		</main>

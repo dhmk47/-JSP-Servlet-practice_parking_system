@@ -59,6 +59,16 @@ main div h1 {
 	color: blue;
 }
 
+.error-msg {
+	display: none;
+	background-color: yellow;
+}
+
+.error-msg span {
+	font-size: 16px;
+	font-weight: 500;
+}
+
 aside {
 	display: flex;
 	flex-direction: row;

@@ -1,21 +1,40 @@
-const btnList = document.querySelectorAll(".btn");
+/* main */
 const showDtl = document.querySelector("main div span");
-const btnBox = document.querySelectorAll("main .button-box");
 const mainTopBox = document.querySelector(".main-top-box");
+
+/*===========================================================*/
+/* aside */
 const asideBox = document.querySelector("aside");
 const loginBox = document.querySelector(".login-box");
-
-const registrationBox = document.querySelector("main .registration-box");
-const infoBox = document.querySelector(".info-box");
-const paymentBox = document.querySelector(".payment-box");
-
-const sectionBox = document.querySelector("section");
-
+const usernameInputBox = document.querySelector(".username");
+const passwordInputBox = document.querySelector(".password");
 const signupBtn = document.querySelector(".signup");
 const signinBtn = document.querySelector(".signin");
 
+/* 로그인 성공시 */
 const userBox = document.querySelector(".login-user-box");
 const userSpanBox = document.querySelector(".login-user-box span");
+
+/* 로그인 하지않고 버튼 클릭시*/
+const notLoginErrorBox = document.querySelector(".error-msg");
+/*===========================================================*/
+/* section */
+const sectionBox = document.querySelector("section");
+
+/* button */
+const btnBox = document.querySelectorAll("main .button-box");
+const btnList = document.querySelectorAll(".btn");
+
+const registrationBox = document.querySelector("main .registration-box");
+const registerCarBtn = document.querySelector(".register-car-btn");
+
+const infoBox = document.querySelector(".info-box");
+const showMyInfoBtn = document.querySelector(".show-my-info-btn");
+
+const paymentBox = document.querySelector(".payment-box");
+const payBtn = document.querySelector(".pay-btn");
+
+
 
 
 let flag1 = false;
@@ -35,10 +54,10 @@ signinBtn.onclick = () => {
 		loginBox.style.display = "flex";
 		signupBtn.innerHTML = "회원가입";
 		signinBtn.innerHTML = "로그인";
-		document.querySelector(".password").value = "";
+		passwordInputBox.value = "";
 	}else {
-		let username = document.querySelector(".username").value;
-		let password = document.querySelector(".password").value;
+		let username = usernameInputBox.value;
+		let password = passwordInputBox.value;
 		$.ajax({
 			type: "get",
 			url: `login?username=${username}&password=${password}`,
@@ -72,52 +91,68 @@ signinBtn.onclick = () => {
 }
 
 btnList[0].onclick = () => {
-	btn2_click_remove();
-	btn3_click_remove();
-	flag2 = false;
-	flag3 = false;
-	if(flag1 == false){
-		btn1_click();
-		asideBox.classList.add("aside-position-move");
-		flag1 = true;
-	}else{
-		btn1_click_remove();
-		asideBox.classList.remove("aside-position-move");
-		flag1 = false;
+	if(loginFlag){
+		btn2_click_remove();
+		btn3_click_remove();
+		flag2 = false;
+		flag3 = false;
+		if(flag1 == false){
+			btn1_click();
+			asideBox.classList.add("aside-position-move");
+			flag1 = true;
+		}else{
+			btn1_click_remove();
+			asideBox.classList.remove("aside-position-move");
+			flag1 = false;
+		}
+	}else {
+		notLoginErrorBox.style.display = "inline-block";
+		usernameInputBox.focus();
 	}
+	
 	
 }
 
 btnList[1].onclick = () => {
-	btn1_click_remove();
-	btn3_click_remove();
-	flag1 = false;
-	flag3 = false;
-	if(flag2 == false){
-		btn2_click();
-		asideBox.classList.add("aside-position-move");
-		flag2 = true;
-	}else{
-		btn2_click_remove();
-		asideBox.classList.remove("aside-position-move");
-		flag2 = false;
+	if(loginFlag){
+		btn1_click_remove();
+		btn3_click_remove();
+		flag1 = false;
+		flag3 = false;
+		if(flag2 == false){
+			btn2_click();
+			asideBox.classList.add("aside-position-move");
+			flag2 = true;
+		}else{
+			btn2_click_remove();
+			asideBox.classList.remove("aside-position-move");
+			flag2 = false;
+		}
+	}else {
+		notLoginErrorBox.style.display = "inline-block";
+		usernameInputBox.focus();
 	}
 	
 }
 
 btnList[2].onclick = () => {
-	btn1_click_remove();
-	btn2_click_remove();
-	flag1 = false;
-	flag2 = false;
-	if(flag3 == false){
-		btn3_click();
-		asideBox.classList.add("aside-position-move");
-		flag3 = true;
+	if(loginFlag){
+		btn1_click_remove();
+		btn2_click_remove();
+		flag1 = false;
+		flag2 = false;
+		if(flag3 == false){
+			btn3_click();
+			asideBox.classList.add("aside-position-move");
+			flag3 = true;
+		}else{
+			btn3_click_remove();
+			asideBox.classList.remove("aside-position-move");
+			flag3 = false;
+		}
 	}else{
-		btn3_click_remove();
-		asideBox.classList.remove("aside-position-move");
-		flag3 = false;
+		notLoginErrorBox.style.display = "inline-block";
+		usernameInputBox.focus();
 	}
 }
 

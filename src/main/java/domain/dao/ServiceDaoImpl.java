@@ -105,4 +105,21 @@ public class ServiceDaoImpl implements ServiceDao{
 	public boolean removeUser() throws Exception {
 		return false;
 	}
+
+	@Override
+	public boolean insertCar(String car_number) throws Exception {
+		con = pool.getConnection();
+		sb = new StringBuilder();
+		
+		sb.append("INSERT\r\n"
+				+ "	car_mst\r\n"
+				+ "VALUES(\r\n"
+				+ "	0,\r\n"
+				+ "	?,\r\n"
+				+ "	NOW(),\r\n"
+				+ "	NOW()\r\n"
+				+ ")");
+		pstmt = con.prepareStatement(sb.toString());
+		return false;
+	}
 }
