@@ -1,4 +1,4 @@
-package web.servlet;
+package web.servlet.api.login;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -21,7 +21,8 @@ public class RegistrationCarServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			carService.registerCar();
+			String car_number = request.getParameter("car_number");
+			carService.registerCar(car_number);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

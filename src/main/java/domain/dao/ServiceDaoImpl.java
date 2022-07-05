@@ -111,15 +111,23 @@ public class ServiceDaoImpl implements ServiceDao{
 		con = pool.getConnection();
 		sb = new StringBuilder();
 		
-		sb.append("INSERT\r\n"
-				+ "	car_mst\r\n"
-				+ "VALUES(\r\n"
-				+ "	0,\r\n"
-				+ "	?,\r\n"
-				+ "	NOW(),\r\n"
-				+ "	NOW()\r\n"
-				+ ")");
-		pstmt = con.prepareStatement(sb.toString());
-		return false;
+		try {
+			sb.append("INSERT\r\n"
+					+ "	car_mst\r\n"
+					+ "VALUES(\r\n"
+					+ "	0,\r\n"
+					+ "	?,\r\n"
+					+ "	NOW(),\r\n"
+					+ "	NOW()\r\n"
+					+ ")");
+			pstmt = con.prepareStatement(sb.toString());
+			pstmt.setString(1, car_number);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con, pstmt);
+		}
+		return result > 0 ? true : false;
 	}
 }
