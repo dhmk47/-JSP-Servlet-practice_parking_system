@@ -95,6 +95,15 @@ section {
 	
 }
 
+.login-user-box {
+	display: none;
+}
+
+.login-user-box span {
+	font-size: 18px;
+	font-weight: 500;
+}
+
 .signup-signin-box {
 	display: flex;
 	

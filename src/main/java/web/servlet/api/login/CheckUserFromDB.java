@@ -27,6 +27,7 @@ public class CheckUserFromDB extends HttpServlet {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		
+		response.setContentType("text/plain;charset=UTF-8");
 		
 		try {
 			User user = userService.getUser(username);
@@ -35,6 +36,8 @@ public class CheckUserFromDB extends HttpServlet {
 				result = 0;
 			}else if(user.getPassword().equals(password)) {
 				result = 2;
+				response.getWriter().print(result + "@" + user.getName());
+				return;
 			}else {
 				result = 1;
 			}

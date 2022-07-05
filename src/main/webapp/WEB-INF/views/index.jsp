@@ -28,6 +28,9 @@
 					<input type="text" class="username" placeholder="아이디" name="username" required>
 					<input type="password" class="password" placeholder="비밀번호" name="password" required>
 				</div>
+				<div class="login-user-box">
+					<span>~~~님 환영합니다</span>
+				</div>
 				<div class="signup-signin-box">
 					<div>
 						<button type="button" class="signup">회원가입</button>
