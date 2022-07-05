@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <title>주차 관리 시스템</title>
 <script src="https://kit.fontawesome.com/87ed282d9d.js" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
 <link rel="stylesheet" href="static/css/style.css">
 <link rel="stylesheet" href="static/css/index.css">
 </head>
@@ -24,15 +25,15 @@
 			</div>
 			<aside>
 				<div class="login-box">
-					<input type="text" placeholder="아이디" name="username" required>
-					<input type="password" placeholder="비밀번호" name="password" required>
+					<input type="text" class="username" placeholder="아이디" name="username" required>
+					<input type="password" class="password" placeholder="비밀번호" name="password" required>
 				</div>
 				<div class="signup-signin-box">
 					<div>
 						<button type="button" class="signup">회원가입</button>
 					</div>
 					<div>
-						<button type="submit" class="signin">로그인</button>
+						<button type="button" class="signin">로그인</button>
 					</div>
 				</div>
 			</aside>

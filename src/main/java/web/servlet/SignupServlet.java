@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import domain.dao.ServiceDao;
+import domain.dao.ServiceDaoImpl;
 import domain.jdbc.DBConnectionMgr;
 import service.UserService;
 import service.UserServiceImpl;
@@ -20,7 +20,7 @@ public class SignupServlet extends HttpServlet {
 	private final UserService userService;
 	
 	public SignupServlet() {
-		userService = new UserServiceImpl(new ServiceDao(DBConnectionMgr.getInstance()));
+		userService = new UserServiceImpl(new ServiceDaoImpl(DBConnectionMgr.getInstance()));
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

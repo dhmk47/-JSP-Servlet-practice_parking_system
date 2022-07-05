@@ -24,6 +24,28 @@ signupBtn.onclick = () => {
 	location.href = "signup";
 }
 
+signinBtn.onclick = () => {
+	let username = document.querySelector(".username").value;
+	let password = document.querySelector(".password").value;
+	$.ajax({
+		type: "get",
+		url: `login?username=${username}&password=${password}`,
+		dataType: "text",
+		success: (response) => {
+			if(response == "0"){
+				alert("아이디가 존재하지 않습니다.")
+			}else if(response == "1"){
+				alert("비밀번호가 틀렸습니다.")
+			}else {
+				alert("로그인 성공!")
+			}
+		},
+		error: (request, status, error) => {
+			alert("요청 실패");
+		}
+	});
+}
+
 btnList[0].onclick = () => {
 	btn2_click_remove();
 	btn3_click_remove();

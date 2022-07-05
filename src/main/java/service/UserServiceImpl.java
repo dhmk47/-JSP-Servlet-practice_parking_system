@@ -1,12 +1,13 @@
 package service;
 
-import domain.dao.ServiceDao;
+import domain.dao.ServiceDaoImpl;
+import domain.entity.User;
 import lombok.RequiredArgsConstructor;
 import web.dto.SignupReqUserDto;
 
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService{
-	private final ServiceDao serviceDao;
+	private final ServiceDaoImpl serviceDao;
 
 	@Override
 	public boolean createUser(SignupReqUserDto signupReqUserDto) throws Exception {
@@ -16,8 +17,8 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public SignupReqUserDto getUser() throws Exception {
-		return null;
+	public User getUser(String username) throws Exception {
+		return serviceDao.getUser(username);
 	}
 
 	@Override
