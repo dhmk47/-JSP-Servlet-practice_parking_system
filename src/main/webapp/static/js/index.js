@@ -41,6 +41,7 @@ let flag2 = false;
 let flag3 = false;
 
 let loginFlag = false;
+let loginUsername = null;
 
 registerCarBtn.onclick = () => {
 	let carNumber = carNumberInputBox.value;
@@ -51,7 +52,8 @@ registerCarBtn.onclick = () => {
 		url: "/root/registerCar",
 		data: {
 			carNumber: carNumber,
-			parkingTicket: parkingTicket
+			parkingTicket: parkingTicket,
+			username: loginUsername
 		},
 		dataTyep: "text",
 		success: (response) => {
@@ -109,6 +111,7 @@ signinBtn.onclick = () => {
 					signinBtn.innerHTML = "로그아웃";
 					userSpanBox.innerHTML = `${name}님 환영합니다.`
 					notLoginErrorBox.style.display = "none";
+					loginUsername = username;
 				}
 			},
 			error: (request, status, error) => {

@@ -22,10 +22,14 @@ public class RegisterCarServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String carNumber = request.getParameter("carNumber");
-		int parkingCode = Integer.parseInt(request.getParameter("parkingTicket"));
+		int ticketCode = Integer.parseInt(request.getParameter("parkingTicket"));
 		
 		try {
-			carService.registerCar(carNumber);
+			if(carService.registerCar(carNumber, ticketCode)) {
+				response.getWriter().print(true);
+			}else {
+				response.getWriter().print(false);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

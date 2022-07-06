@@ -13,12 +13,12 @@ public class CarServiceImpl implements CarService{
 	}
 
 	@Override
-	public boolean registerCar(String car_number) throws Exception {
-		return serviceDao.insertCar(car_number);
+	public boolean registerCar(String carNumber, int ticketCode) throws Exception {
+		return serviceDao.insertCar(carNumber, ticketCode) == 2 ? true : false;
 	}
 
 	@Override
-	public Car getCarInfo() throws Exception {
+	public Car getCarInfo(String carNumber) throws Exception {
 		return null;
 	}
 
