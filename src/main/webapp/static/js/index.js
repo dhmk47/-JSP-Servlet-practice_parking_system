@@ -27,6 +27,8 @@ const btnList = document.querySelectorAll(".btn");
 
 const registrationBox = document.querySelector("main .registration-box");
 const registerCarBtn = document.querySelector(".register-car-btn");
+const carNumberInputBox = document.querySelector("#car-number");
+const selectBox = document.querySelector(".select-option select");
 
 const infoBox = document.querySelector(".info-box");
 const showMyInfoBtn = document.querySelector(".show-my-info-btn");
@@ -34,17 +36,46 @@ const showMyInfoBtn = document.querySelector(".show-my-info-btn");
 const paymentBox = document.querySelector(".payment-box");
 const payBtn = document.querySelector(".pay-btn");
 
-
-
-
 let flag1 = false;
 let flag2 = false;
 let flag3 = false;
 
 let loginFlag = false;
 
+registerCarBtn.onclick = () => {
+	let carNumber = carNumberInputBox.value;
+	let parkingTicket = selectBox.options[selectBox.selectedIndex].value;
+	
+	$.ajax({
+		type: "post",
+		url: "/root/registerCar",
+		data: {
+			carNumber: carNumber,
+			parkingTicket: parkingTicket
+		},
+		dataTyep: "text",
+		success: (response) => {
+			if(response == "true"){
+				alert("등록 성공");
+			}else {
+				alert("등록 실패");
+			}
+		},
+		error: (request, status, error) => {
+			alert("요청 실패");
+			console.log(request.status);
+			console.log(request.responseText);
+			console.log(error);
+		}
+	});
+}
+
 signupBtn.onclick = () => {
+	if(loginFlag){
+		location.href = "";
+	}else {
 	location.href = "signup";
+	}
 }
 
 signinBtn.onclick = () => {
@@ -63,11 +94,8 @@ signinBtn.onclick = () => {
 			url: `login?username=${username}&password=${password}`,
 			dataType: "text",
 			success: (response) => {
-				console.log(response);
 				let resultID = response.slice(0, 1);
 				let name = response.slice(2);
-				console.log(resultID);
-				console.log(name);
 				if(resultID == "0"){
 					alert("아이디가 존재하지 않습니다.")
 				}else if(resultID == "1"){
@@ -80,6 +108,7 @@ signinBtn.onclick = () => {
 					signupBtn.innerHTML = "정보 수정";
 					signinBtn.innerHTML = "로그아웃";
 					userSpanBox.innerHTML = `${name}님 환영합니다.`
+					notLoginErrorBox.style.display = "none";
 				}
 			},
 			error: (request, status, error) => {

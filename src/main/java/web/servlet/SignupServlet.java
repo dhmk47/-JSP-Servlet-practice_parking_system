@@ -30,8 +30,8 @@ public class SignupServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("회원가입 실행");
 		String email = null;
-		if(!request.getParameter("select-email").equals("직접입력")) {
-			email = request.getParameter("email") + request.getParameter("select-email");
+		if(!request.getParameter("selectEmail").equals("직접입력")) {
+			email = request.getParameter("email") + request.getParameter("selectEmail");
 		}else {
 			email = request.getParameter("email");
 		}
@@ -44,7 +44,12 @@ public class SignupServlet extends HttpServlet {
 				.build();
 		
 		try {
-			userService.createUser(signupReqUserDto);
+			if(userService.createUser(signupReqUserDto)) {
+				response.getWriter().print(true);
+//				response.sendRedirect("/root/index"); // requset.getParameter 값을 가져올수 없습니다.
+			}else {
+				response.getWriter().print(false);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

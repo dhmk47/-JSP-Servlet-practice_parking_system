@@ -11,8 +11,6 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public boolean createUser(SignupReqUserDto signupReqUserDto) throws Exception {
-		System.out.println(signupReqUserDto);
-		
 		return serviceDao.insertUser(signupReqUserDto.toEntity()) > 0;
 	}
 

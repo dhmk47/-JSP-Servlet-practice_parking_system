@@ -61,10 +61,10 @@
 								</select>
 							</div>
 							<div>
-								<button type="submit">등록하기</button>
+								<button type="button" class="register-car-btn">등록하기</button>
 							</div>
 						</div>
-						<button type="button" class="btn register-car-btn">차량 등록</button>
+						<button type="button" class="btn">차량 등록</button>
 					</div>
 				</form>
 				<div class="button-box btn2">
