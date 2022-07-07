@@ -1,8 +1,8 @@
 package service;
 
-import domain.entity.Car;
+import domain.entity.CarAllInfo;
 
 public interface CarService {
 	public boolean registerCar(String carNumber, int ticketCode) throws Exception;
-	public Car getCarInfo(String carNumer) throws Exception;
+	public CarAllInfo getCarInfo(String carNumer) throws Exception;
 }

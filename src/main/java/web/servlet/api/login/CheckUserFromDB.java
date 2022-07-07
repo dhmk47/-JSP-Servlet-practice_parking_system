@@ -7,6 +7,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.google.gson.Gson;
 
 import domain.dao.ServiceDaoImpl;
 import domain.entity.User;
@@ -28,23 +31,16 @@ public class CheckUserFromDB extends HttpServlet {
 		String password = request.getParameter("password");
 		
 		response.setContentType("text/plain;charset=UTF-8");
+		User user = null;
 		
 		try {
-			User user = userService.getUser(username);
-			int result = 0;
-			if(user == null) {
-				result = 0;
-			}else if(user.getPassword().equals(password)) {
-				result = 2;
-				response.getWriter().print(result + "@" + user.getName());
-				return;
-			}else {
-				result = 1;
+			user = userService.getUser(username);
+			if(user != null) {
+				HttpSession session = request.getSession();
+				session.setAttribute("user", user);
+				
 			}
-			// result: 0 -> 아이디 없음
-			// result: 1 -> 비밀번호 틀림
-			// result: 2 -> 계정 로그인 성공
-			response.getWriter().print(result);
+			response.getWriter().print(user);
 			
 		} catch (Exception e) {
 			e.printStackTrace();

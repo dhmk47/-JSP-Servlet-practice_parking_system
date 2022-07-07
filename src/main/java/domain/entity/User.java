@@ -1,7 +1,5 @@
 package domain.entity;
 
-import java.time.LocalDateTime;
-
 import lombok.Builder;
 import lombok.Data;
 
@@ -13,6 +11,4 @@ public class User {
 	private String email;
 	private String username;
 	private String password;
-	private LocalDateTime create_date;
-	private LocalDateTime update_date;
 }

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import domain.entity.CarAllInfo;
 import service.CarService;
 import service.CarServiceImpl;
 
@@ -26,6 +27,8 @@ public class RegisterCarServlet extends HttpServlet {
 		
 		try {
 			if(carService.registerCar(carNumber, ticketCode)) {
+				CarAllInfo carInfo = carService.getCarInfo(carNumber);
+				
 				response.getWriter().print(true);
 			}else {
 				response.getWriter().print(false);

@@ -64,9 +64,7 @@ public class ServiceDaoImpl implements ServiceDao{
 					+ "	um.name,\r\n"
 					+ "	um.email,\r\n"
 					+ "	um.username,\r\n"
-					+ "	um.password,\r\n"
-					+ "	um.create_date,\r\n"
-					+ "	um.update_date\r\n"
+					+ "	um.password\r\n"
 					+ "FROM\r\n"
 					+ "	user_mst um\r\n"
 					+ "	LEFT OUTER JOIN user_dtl ud ON(ud.user_code = um.user_code)\r\n"
@@ -84,8 +82,6 @@ public class ServiceDaoImpl implements ServiceDao{
 						.email(rs.getString(3))
 						.username(rs.getString(4))
 						.password(rs.getString(5))
-						.create_date(rs.getTimestamp(6).toLocalDateTime())
-						.update_date(rs.getTimestamp(7).toLocalDateTime())
 						.build();
 			}
 		} catch (SQLException e) {

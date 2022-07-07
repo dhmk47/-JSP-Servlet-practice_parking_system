@@ -2,7 +2,7 @@ package service;
 
 import domain.dao.ServiceDao;
 import domain.dao.ServiceDaoImpl;
-import domain.entity.Car;
+import domain.entity.CarAllInfo;
 import domain.jdbc.DBConnectionMgr;
 
 public class CarServiceImpl implements CarService{
@@ -18,8 +18,8 @@ public class CarServiceImpl implements CarService{
 	}
 
 	@Override
-	public Car getCarInfo(String carNumber) throws Exception {
-		return null;
+	public CarAllInfo getCarInfo(String carNumber) throws Exception {
+		return serviceDao.getCarInfoByCarNumber(carNumber);
 	}
 
 }

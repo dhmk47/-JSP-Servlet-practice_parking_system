@@ -43,6 +43,8 @@ let flag3 = false;
 let loginFlag = false;
 let loginUsername = null;
 
+load();
+
 registerCarBtn.onclick = () => {
 	let carNumber = carNumberInputBox.value;
 	let parkingTicket = selectBox.options[selectBox.selectedIndex].value;
@@ -82,12 +84,25 @@ signupBtn.onclick = () => {
 
 signinBtn.onclick = () => {
 	if(loginFlag == true) {
-		loginFlag = false;
-		userBox.style.display = "none";
-		loginBox.style.display = "flex";
-		signupBtn.innerHTML = "회원가입";
-		signinBtn.innerHTML = "로그인";
-		passwordInputBox.value = "";
+		$.ajax({
+			type: "get",
+			url: "/root/logout",
+			dataType: "text",
+			success: (response) => {
+				if(response == "true"){
+				alert("로그아웃됨");
+				location.replace("/root/index");
+				}else {
+					alert("로그아웃 오류");
+				}
+			},
+			error: (request, status, error) => {
+				alert("요청 실패");
+				console.log(request.status);
+				console.log(request.responseText);
+				console.log(error);
+			}
+		})
 	}else {
 		let username = usernameInputBox.value;
 		let password = passwordInputBox.value;
@@ -96,22 +111,13 @@ signinBtn.onclick = () => {
 			url: `login?username=${username}&password=${password}`,
 			dataType: "text",
 			success: (response) => {
-				let resultID = response.slice(0, 1);
-				let name = response.slice(2);
-				if(resultID == "0"){
-					alert("아이디가 존재하지 않습니다.")
-				}else if(resultID == "1"){
-					alert("비밀번호가 틀렸습니다.")
+				if(response == "null"){
+					alert("계정이 옳바르지 않습니다.");
 				}else {
 					alert("로그인 성공!");
-					loginFlag = true;
-					userBox.style.display = "flex";
-					loginBox.style.display = "none";
-					signupBtn.innerHTML = "정보 수정";
-					signinBtn.innerHTML = "로그아웃";
-					userSpanBox.innerHTML = `${name}님 환영합니다.`
-					notLoginErrorBox.style.display = "none";
+					
 					loginUsername = username;
+					location.replace("/root/index");
 				}
 			},
 			error: (request, status, error) => {
@@ -190,6 +196,40 @@ btnList[2].onclick = () => {
 
 showDtl.onclick = () => {
 	location.href = "showDtl";
+}
+
+function load() {
+	$.ajax({
+		type: "get",
+		url: "/root/api/v1/userinfo/session",
+		dataType: "json",
+		success: (response) => {
+			if(response != null){
+				console.log(response);
+				loginFlag = true;
+				userBox.style.display = "flex";
+				loginBox.style.display = "none";
+				signupBtn.innerHTML = "정보 수정";
+				signinBtn.innerHTML = "로그아웃";
+				userSpanBox.innerHTML = `${response.name}님 환영합니다.`
+				notLoginErrorBox.style.display = "none";
+			}else {
+				loginFlag = false;
+				userBox.style.display = "none";
+				loginBox.style.display = "flex";
+				signupBtn.innerHTML = "회원가입";
+				signinBtn.innerHTML = "로그인";
+				passwordInputBox.value = "";
+				alert("세련이 만료되어 로그아웃 되었습니다.");
+			}
+		},
+		error: (request, status, error) => {
+			alert("요청 실패");
+			console.log(request.status);
+			console.log(request.responseText);
+			console.log(error);
+		}
+	})
 }
 
 function btn1_click() {

@@ -1,4 +1,4 @@
-package web.servlet;
+package web.servlet.api.logout;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -7,13 +7,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/index")
-public class IndexServlet extends HttpServlet {
+@WebServlet("/logout")
+public class LogoutServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println(request.getSession().getAttribute("user"));
-		request.getRequestDispatcher("WEB-INF/views/index.jsp").forward(request, response);
+		request.getSession().invalidate();
+		response.getWriter().print(true);
 	}
-	
+
 }
