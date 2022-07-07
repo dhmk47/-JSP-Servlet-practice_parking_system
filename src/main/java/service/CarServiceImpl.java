@@ -1,5 +1,7 @@
 package service;
 
+import java.util.ArrayList;
+
 import domain.dao.ServiceDao;
 import domain.dao.ServiceDaoImpl;
 import domain.entity.CarAllInfo;
@@ -18,8 +20,13 @@ public class CarServiceImpl implements CarService{
 	}
 
 	@Override
-	public CarAllInfo getCarInfo(String carNumber) throws Exception {
+	public CarAllInfo getCarInfoByCarNumber(String carNumber) throws Exception {
 		return serviceDao.getCarInfoByCarNumber(carNumber);
+	}
+
+	@Override
+	public ArrayList<CarAllInfo> getCarInfoByCarCode(int carCode) throws Exception {
+		return serviceDao.getCarInfoByCarCode(carCode);
 	}
 
 }

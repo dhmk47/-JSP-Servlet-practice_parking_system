@@ -32,6 +32,7 @@ const selectBox = document.querySelector(".select-option select");
 
 const infoBox = document.querySelector(".info-box");
 const showMyInfoBtn = document.querySelector(".show-my-info-btn");
+const nameInInfoBox = document.querySelector(".info-box h1");
 
 const paymentBox = document.querySelector(".payment-box");
 const payBtn = document.querySelector(".pay-btn");
@@ -41,7 +42,6 @@ let flag2 = false;
 let flag3 = false;
 
 let loginFlag = false;
-let loginUsername = null;
 
 load();
 
@@ -54,23 +54,18 @@ registerCarBtn.onclick = () => {
 		url: "/root/registerCar",
 		data: {
 			carNumber: carNumber,
-			parkingTicket: parkingTicket,
-			username: loginUsername
+			parkingTicket: parkingTicket
 		},
 		dataTyep: "text",
 		success: (response) => {
 			if(response == "true"){
 				alert("등록 성공");
+				location.replace("/root/index");
 			}else {
 				alert("등록 실패");
 			}
 		},
-		error: (request, status, error) => {
-			alert("요청 실패");
-			console.log(request.status);
-			console.log(request.responseText);
-			console.log(error);
-		}
+		error: errorMessage
 	});
 }
 
@@ -96,13 +91,8 @@ signinBtn.onclick = () => {
 					alert("로그아웃 오류");
 				}
 			},
-			error: (request, status, error) => {
-				alert("요청 실패");
-				console.log(request.status);
-				console.log(request.responseText);
-				console.log(error);
-			}
-		})
+			error: errorMessage
+		});
 	}else {
 		let username = usernameInputBox.value;
 		let password = passwordInputBox.value;
@@ -115,14 +105,10 @@ signinBtn.onclick = () => {
 					alert("계정이 옳바르지 않습니다.");
 				}else {
 					alert("로그인 성공!");
-					
-					loginUsername = username;
 					location.replace("/root/index");
 				}
 			},
-			error: (request, status, error) => {
-				alert("요청 실패");
-			}
+			error: errorMessage
 		});
 	}
 	
@@ -213,6 +199,19 @@ function load() {
 				signinBtn.innerHTML = "로그아웃";
 				userSpanBox.innerHTML = `${response.name}님 환영합니다.`
 				notLoginErrorBox.style.display = "none";
+				
+				nameInInfoBox.innerHTML = `${response.name}님의 정보`;
+				$.ajax({
+					type: "get",
+					url: "/root/api/v1/load/carinfo",
+					dataType: "json",
+					success: (response) => {
+						alert("차량 정보 불러오기 성공");
+						console.log(response);
+						console.log(response[1].car_number)
+					},
+					error: errorMessage
+				})
 			}else {
 				loginFlag = false;
 				userBox.style.display = "none";
@@ -223,13 +222,15 @@ function load() {
 				alert("세련이 만료되어 로그아웃 되었습니다.");
 			}
 		},
-		error: (request, status, error) => {
-			alert("요청 실패");
-			console.log(request.status);
-			console.log(request.responseText);
-			console.log(error);
-		}
+		error: errorMessage
 	})
+}
+
+function errorMessage(requset, status, error) {
+	alert("요청 실패");
+	console.log(request.status);
+	console.log(request.responseText);
+	console.log(error);
 }
 
 function btn1_click() {

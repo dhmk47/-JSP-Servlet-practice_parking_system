@@ -20,13 +20,19 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public boolean updateUser() throws Exception {
+	public boolean updateUserMst() throws Exception {
 		return false;
 	}
 
 	@Override
+	public boolean createUserDtl(int userCode, int carCode) throws Exception {
+		return serviceDao.insertUserDtl(userCode, carCode);
+	}
+	
+	@Override
 	public boolean deleteUser() throws Exception {
 		return false;
 	}
+
 
 }

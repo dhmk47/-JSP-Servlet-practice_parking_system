@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import domain.entity.Car;
 import domain.entity.CarAllInfo;
@@ -94,8 +95,35 @@ public class ServiceDaoImpl implements ServiceDao{
 	}
 
 	@Override
-	public boolean modifyUser() throws Exception {
+	public boolean modifyUserMst() throws Exception {
 		return false;
+	}
+	
+	@Override
+	public boolean insertUserDtl(int user_code, int car_code) throws Exception {
+		con = pool.getConnection();
+		sb = new StringBuilder();
+		
+		try {
+			sb.append("INSERT INTO\r\n"
+					+ "	user_dtl\r\n"
+					+ "VALUES(\r\n"
+					+ "	?,\r\n"
+					+ "	?,\r\n"
+					+ "	NOW(),\r\n"
+					+ "	NOW()\r\n"
+					+ ")");
+			pstmt = con.prepareStatement(sb.toString());
+			pstmt.setInt(1, user_code);
+			pstmt.setInt(2, car_code);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con, pstmt);
+		}
+		
+		return result != 0;
 	}
 
 	@Override
@@ -183,6 +211,46 @@ public class ServiceDaoImpl implements ServiceDao{
 		}
 		
 		return car;
+	}
+	
+	@Override
+	public ArrayList<CarAllInfo> getCarInfoByCarCode(int car_code) throws Exception {
+		con = pool.getConnection();
+		sb = new StringBuilder();
+		ArrayList<CarAllInfo> carList = null;
+		
+		try {
+			sb.append("SELECT\r\n"
+					+ "	ud.car_code,\r\n"
+					+ "	cm.car_number,\r\n"
+					+ "	pt.ticket_dtl\r\n"
+					+ "FROM\r\n"
+					+ "	user_dtl ud\r\n"
+					+ "	LEFT OUTER JOIN car_mst cm ON(cm.car_code = ud.car_code)\r\n"
+					+ "	LEFT OUTER JOIN car_dtl cd ON(cd.car_code = cm.car_code)\r\n"
+					+ "	LEFT OUTER JOIN parking_ticket pt ON(pt.ticket_code = cd.ticket_code)\r\n"
+					+ "WHERE\r\n"
+					+ "	ud.user_code = ?");
+			pstmt = con.prepareStatement(sb.toString());
+			pstmt.setInt(1, car_code);
+			rs = pstmt.executeQuery();
+			carList = new ArrayList<CarAllInfo>();
+			while(rs.next()) {
+				CarAllInfo carInfo = CarAllInfo.builder()
+						.car_code(rs.getInt(1))
+						.car_number(rs.getString(2))
+						.ticket_dtl(rs.getString(3))
+						.build();
+				
+				carList.add(carInfo);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con, pstmt, rs);
+		}
+		
+		return carList;
 	}
 	
 	/*@Override
