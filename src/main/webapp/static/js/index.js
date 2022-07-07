@@ -33,6 +33,8 @@ const selectBox = document.querySelector(".select-option select");
 const infoBox = document.querySelector(".info-box");
 const showMyInfoBtn = document.querySelector(".show-my-info-btn");
 const nameInInfoBox = document.querySelector(".info-box h1");
+const showUserCarInfoSelectBox = document.querySelector(".info-box select");
+const parkingTicketType = document.querySelector(".ticket-type");
 
 const paymentBox = document.querySelector(".payment-box");
 const payBtn = document.querySelector(".pay-btn");
@@ -43,7 +45,17 @@ let flag3 = false;
 
 let loginFlag = false;
 
+let carListObject = null;
+
 load();
+
+showUserCarInfoSelectBox.onchange = () => {
+	let select = showUserCarInfoSelectBox.options[showUserCarInfoSelectBox.selectedIndex].value;
+	parkingTicketType.innerHTML = `
+	주차권: ${carListObject[select].ticket_dtl}
+	`;
+	
+}
 
 registerCarBtn.onclick = () => {
 	let carNumber = carNumberInputBox.value;
@@ -209,6 +221,14 @@ function load() {
 						alert("차량 정보 불러오기 성공");
 						console.log(response);
 						console.log(response[1].car_number)
+						carListObject = response;
+						
+						for(let i = 0; i < response.length; i++){
+							showUserCarInfoSelectBox.innerHTML += `
+							<option value=${i}>${response[i].car_number}</option>
+							`;
+						}
+						
 					},
 					error: errorMessage
 				})

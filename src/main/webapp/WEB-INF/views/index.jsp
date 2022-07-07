@@ -70,8 +70,12 @@
 				<div class="button-box btn2">
 					<div class="info-box">
 						<h1>~~님의 정보</h1>
-						<p>등록 차량 번호:&nbsp</p>
-						<p>주차권:&nbsp</p>
+						<p>등록 차량 번호:&nbsp
+							<select>
+								
+							</select>
+						</p>
+						<p class="ticket-type">주차권:&nbsp</p>
 					</div>
 					<button type="button" class="btn show-my-info-btn">내 정보 보기</button>
 				</div>
