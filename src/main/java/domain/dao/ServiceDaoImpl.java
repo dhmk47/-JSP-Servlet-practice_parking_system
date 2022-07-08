@@ -95,8 +95,33 @@ public class ServiceDaoImpl implements ServiceDao{
 	}
 
 	@Override
-	public boolean modifyUserMst() throws Exception {
-		return false;
+	public boolean modifyUser(User user, int user_code) throws Exception {
+		con = pool.getConnection();
+		sb = new StringBuilder();
+		
+		try {
+			sb.append("UPDATE\r\n"
+					+ "	user_mst\r\n"
+					+ "SET\r\n"
+					+ "	NAME = ?,\r\n"
+					+ "	email = ?,\r\n"
+					+ "	PASSWORD = ?,\r\n"
+					+ "	update_date = NOW()\r\n"
+					+ "WHERE\r\n"
+					+ "	user_code = ?");
+			pstmt = con.prepareStatement(sb.toString());
+			pstmt.setString(1, user.getName());
+			pstmt.setString(2, user.getEmail());
+			pstmt.setString(3, user.getPassword());
+			pstmt.setInt(4, user_code);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con, pstmt);
+		}
+		
+		return result != 0;
 	}
 	
 	@Override
@@ -132,7 +157,7 @@ public class ServiceDaoImpl implements ServiceDao{
 	}
 
 	@Override
-	public int insertCar(String car_number, int ticket_code) throws Exception {
+	public int insertCar(String car_number, int ticket_code, int year, int dayOfYear, int hour) throws Exception {
 		con = pool.getConnection();
 		sb = new StringBuilder();
 		
@@ -154,7 +179,10 @@ public class ServiceDaoImpl implements ServiceDao{
 			sb.append("UPDATE\r\n"
 					+ "	car_dtl\r\n"
 					+ "SET\r\n"
-					+ "	ticket_code = ?\r\n"
+					+ "	ticket_code = ?,\r\n"
+					+ "	start_year = ?,\r\n"
+					+ "	start_day = ?,\r\n"
+					+ "	start_hour = ?\r\n"
 					+ "WHERE\r\n"
 					+ "	car_code = (select\r\n"
 					+ "						car_code\r\n"
@@ -164,7 +192,10 @@ public class ServiceDaoImpl implements ServiceDao{
 					+ "						car_number = ?)");
 			pstmt = con.prepareStatement(sb.toString());
 			pstmt.setInt(1, ticket_code);
-			pstmt.setString(2, car_number);
+			pstmt.setInt(2, year);
+			pstmt.setInt(3, dayOfYear);
+			pstmt.setInt(4, hour);
+			pstmt.setString(5, car_number);
 			result += pstmt.executeUpdate();
 			
 		} catch (SQLException e) {
@@ -186,7 +217,10 @@ public class ServiceDaoImpl implements ServiceDao{
 			sb.append("SELECT\r\n"
 					+ "	cm.car_code,\r\n"
 					+ "	cm.car_number,\r\n"
-					+ "	pt.ticket_dtl\r\n"
+					+ "	pt.ticket_dtl,\r\n"
+					+ "	cd.start_year,\r\n"
+					+ "	cd.start_day,\r\n"
+					+ "	cd.start_hour\r\n"
 					+ "FROM\r\n"
 					+ "	car_mst cm\r\n"
 					+ "	LEFT OUTER JOIN car_dtl cd ON(cd.car_code = cm.car_code)\r\n"
@@ -202,6 +236,9 @@ public class ServiceDaoImpl implements ServiceDao{
 						.car_code(rs.getInt(1))
 						.car_number(rs.getString(2))
 						.ticket_dtl(rs.getString(3))
+						.start_year(rs.getInt(4))
+						.start_dayOfYear(rs.getInt(5))
+						.start_hour(rs.getInt(6))
 						.build();
 			}
 		} catch (SQLException e) {
@@ -217,13 +254,16 @@ public class ServiceDaoImpl implements ServiceDao{
 	public ArrayList<CarAllInfo> getCarInfoByCarCode(int car_code) throws Exception {
 		con = pool.getConnection();
 		sb = new StringBuilder();
-		ArrayList<CarAllInfo> carList = null;
+		ArrayList<CarAllInfo> carList = new ArrayList<CarAllInfo>();
 		
 		try {
 			sb.append("SELECT\r\n"
 					+ "	ud.car_code,\r\n"
 					+ "	cm.car_number,\r\n"
-					+ "	pt.ticket_dtl\r\n"
+					+ "	pt.ticket_dtl,\r\n"
+					+ "	cd.start_year,\r\n"
+					+ "	cd.start_day,\r\n"
+					+ "	cd.start_hour\r\n"
 					+ "FROM\r\n"
 					+ "	user_dtl ud\r\n"
 					+ "	LEFT OUTER JOIN car_mst cm ON(cm.car_code = ud.car_code)\r\n"
@@ -234,12 +274,14 @@ public class ServiceDaoImpl implements ServiceDao{
 			pstmt = con.prepareStatement(sb.toString());
 			pstmt.setInt(1, car_code);
 			rs = pstmt.executeQuery();
-			carList = new ArrayList<CarAllInfo>();
 			while(rs.next()) {
 				CarAllInfo carInfo = CarAllInfo.builder()
 						.car_code(rs.getInt(1))
 						.car_number(rs.getString(2))
 						.ticket_dtl(rs.getString(3))
+						.start_year(rs.getInt(4))
+						.start_dayOfYear(rs.getInt(5))
+						.start_hour(rs.getInt(6))
 						.build();
 				
 				carList.add(carInfo);

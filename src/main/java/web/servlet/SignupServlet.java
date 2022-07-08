@@ -12,7 +12,7 @@ import domain.dao.ServiceDaoImpl;
 import domain.jdbc.DBConnectionMgr;
 import service.UserService;
 import service.UserServiceImpl;
-import web.dto.SignupReqUserDto;
+import web.dto.ReqUserDto;
 
 @WebServlet("/signup")
 public class SignupServlet extends HttpServlet {
@@ -36,7 +36,7 @@ public class SignupServlet extends HttpServlet {
 			email = request.getParameter("email");
 		}
 		
-		SignupReqUserDto signupReqUserDto = SignupReqUserDto.builder()
+		ReqUserDto signupReqUserDto = ReqUserDto.builder()
 				.name(request.getParameter("name"))
 				.username(request.getParameter("username"))
 				.password(request.getParameter("password"))

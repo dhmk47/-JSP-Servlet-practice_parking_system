@@ -37,6 +37,7 @@ const showUserCarInfoSelectBox = document.querySelector(".info-box select");
 const parkingTicketType = document.querySelector(".ticket-type");
 
 const paymentBox = document.querySelector(".payment-box");
+const userInfoInPaymentBox = document.querySelector(".payment-box h1");
 const payBtn = document.querySelector(".pay-btn");
 
 let flag1 = false;
@@ -51,9 +52,13 @@ load();
 
 showUserCarInfoSelectBox.onchange = () => {
 	let select = showUserCarInfoSelectBox.options[showUserCarInfoSelectBox.selectedIndex].value;
-	parkingTicketType.innerHTML = `
-	주차권: ${carListObject[select].ticket_dtl}
-	`;
+	if(select > -1){
+		parkingTicketType.innerHTML = `
+		주차권: ${carListObject[select].ticket_dtl}
+		`;
+	}else {
+		parkingTicketType.innerHTML = "주차권: ";
+	}
 	
 }
 
@@ -83,7 +88,7 @@ registerCarBtn.onclick = () => {
 
 signupBtn.onclick = () => {
 	if(loginFlag){
-		location.href = "";
+		location.href = "modifyAccountInfo";
 	}else {
 	location.href = "signup";
 	}
@@ -209,24 +214,29 @@ function load() {
 				loginBox.style.display = "none";
 				signupBtn.innerHTML = "정보 수정";
 				signinBtn.innerHTML = "로그아웃";
-				userSpanBox.innerHTML = `${response.name}님 환영합니다.`
+				userSpanBox.innerHTML = `${response.name}님 환영합니다.`;
 				notLoginErrorBox.style.display = "none";
 				
 				nameInInfoBox.innerHTML = `${response.name}님의 정보`;
+				userInfoInPaymentBox.innerHTML = `${response.name}님의 요금현황`;
 				$.ajax({
 					type: "get",
 					url: "/root/api/v1/load/carinfo",
 					dataType: "json",
 					success: (response) => {
 						alert("차량 정보 불러오기 성공");
-						console.log(response);
-						console.log(response[1].car_number)
-						carListObject = response;
 						
-						for(let i = 0; i < response.length; i++){
-							showUserCarInfoSelectBox.innerHTML += `
-							<option value=${i}>${response[i].car_number}</option>
-							`;
+						if(response.length == 0){
+							showUserCarInfoSelectBox.innerHTML = `<option>차량을 먼저 등록해주세요.</option>`;
+						}else{
+							carListObject = response;
+						
+							showUserCarInfoSelectBox.innerHTML = `<option>차량을 선택해주세요.</option>`
+							for(let i = 0; i < response.length; i++){
+								showUserCarInfoSelectBox.innerHTML += `
+								<option value=${i}>${response[i].car_number}</option>
+								`;
+							}	
 						}
 						
 					},
@@ -246,7 +256,7 @@ function load() {
 	})
 }
 
-function errorMessage(requset, status, error) {
+function errorMessage(request, status, error) {
 	alert("요청 실패");
 	console.log(request.status);
 	console.log(request.responseText);

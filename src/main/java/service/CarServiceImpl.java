@@ -15,8 +15,8 @@ public class CarServiceImpl implements CarService{
 	}
 
 	@Override
-	public boolean registerCar(String carNumber, int ticketCode) throws Exception {
-		return serviceDao.insertCar(carNumber, ticketCode) == 2 ? true : false;
+	public boolean registerCar(String carNumber, int ticketCode,int year, int dayOfYear, int hour) throws Exception {
+		return serviceDao.insertCar(carNumber, ticketCode, year, dayOfYear, hour) == 2 ? true : false;
 	}
 
 	@Override

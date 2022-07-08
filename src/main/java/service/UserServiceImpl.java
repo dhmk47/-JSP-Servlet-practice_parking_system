@@ -3,14 +3,14 @@ package service;
 import domain.dao.ServiceDaoImpl;
 import domain.entity.User;
 import lombok.RequiredArgsConstructor;
-import web.dto.SignupReqUserDto;
+import web.dto.ReqUserDto;
 
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService{
 	private final ServiceDaoImpl serviceDao;
 
 	@Override
-	public boolean createUser(SignupReqUserDto signupReqUserDto) throws Exception {
+	public boolean createUser(ReqUserDto signupReqUserDto) throws Exception {
 		return serviceDao.insertUser(signupReqUserDto.toEntity()) > 0;
 	}
 
@@ -20,8 +20,9 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public boolean updateUserMst() throws Exception {
-		return false;
+	public boolean updateUser(ReqUserDto modifyReqUserDto, int userCode) throws Exception {
+		System.out.println(modifyReqUserDto.toEntity());
+		return serviceDao.modifyUser(modifyReqUserDto.toEntity(), userCode);
 	}
 
 	@Override

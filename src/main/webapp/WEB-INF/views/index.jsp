@@ -69,7 +69,7 @@
 				</form>
 				<div class="button-box btn2">
 					<div class="info-box">
-						<h1>~~님의 정보</h1>
+						<h1></h1>
 						<p>등록 차량 번호:&nbsp
 							<select>
 								
@@ -81,7 +81,7 @@
 				</div>
 				<div class="button-box btn3">
 					<div class="payment-box">
-						<h1>~~님의 요금현황</h1>
+						<h1></h1>
 						<p>지불금액:&nbsp</p>
 					</div>
 					<button type="button" class="btn pay-btn">결제하기</button>

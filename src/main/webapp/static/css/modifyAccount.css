@@ -1,0 +1,106 @@
+@charset "UTF-8";
+
+:root {
+	--main-btn-color: #0F1840;
+	--main-bg-color: #232D5C;
+	--main-bright-color: #535D89;
+	--main-font-color: #7C84A7;
+}
+
+body {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	
+	background-color: var(--main-bg-color);
+}
+
+#container {
+	margin-top: 200px;
+	width: 450px;
+}
+
+h1 {
+	margin-bottom: 100px;
+	
+	font-size: 20px;
+	font-weight: 500;
+	
+	color: var(--main-font-color);
+}
+
+/* form {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	align-items: flex-start;
+	
+	height: 380px;
+} */
+
+label {
+	color: var(--main-font-color);
+}
+
+main input {
+	width: 150px;
+}
+
+button {
+	cursor: pointer;
+	border-style: 1px solid #141414;
+	border-radius: 5px;
+	color: var(--main-btn-color);
+	background-color: var(--main-bright-color);
+}
+
+#name {
+	margin-left: 65px;
+}
+
+#username {
+	margin-left: 52px;
+}
+
+#password {
+	margin-left: 39px;
+}
+
+#password-check {
+	margin-left: 10px;
+}
+
+
+.password-error {
+	display: none;
+	margin-left: 10px;
+	content: "비밀번호가 다릅니다";
+	font-size: 16px;
+	color: red;
+}
+
+.explain-password-box {
+	display: none;
+	position: absolute;
+	top: 477px;
+	left: 930px;
+	border-radius: 5px;
+	background-color: yellow;
+}
+
+main .explain-password {
+	display: inline-block;
+	padding: 0px 15px;
+	
+	font-size: 14px;
+	color: var(--main-font-color);
+}
+
+.show-explain-password-box {
+	display: inline-block;
+}
+
+#email {
+	margin-left: 52px;
+}
