@@ -17,6 +17,7 @@ import service.CarService;
 import service.CarServiceImpl;
 import service.UserService;
 import service.UserServiceImpl;
+import web.dto.RegistrationReqCarDto;
 
 @WebServlet("/registerCar")
 public class RegisterCarServlet extends HttpServlet {
@@ -39,17 +40,58 @@ public class RegisterCarServlet extends HttpServlet {
 		int dayOfYear = now.getDayOfYear();	// 365일 기준으로 날짜 카운트 예) 35일...45일...등등
 		int hour = now.getHour();			// 현재 시간을 담는 변수 추후에 주차권보다 날짜가 지났다면 시간마다 요금 부과
 		
-		try {
-			if(carService.registerCar(carNumber, ticketCode, year, dayOfYear, hour)) {
-				CarAllInfo carInfo = carService.getCarInfoByCarNumber(carNumber);
-				int user_code = ((User) request.getSession().getAttribute("user")).getUser_code();
-				System.out.println(user_code);
-				if(userService.createUserDtl(user_code, carInfo.getCar_code())) {
-					response.getWriter().print(true);
-				}
+		int expirationYear = year;			// 만료연도
+		int expirationDayOfYear = 0;		// 만료일
+		int expirationHour = hour;			// 만료시간
+		
+		if(ticketCode == 1) {
+			expirationDayOfYear = dayOfYear + 1;
+		}else if(ticketCode == 2) {
+			expirationDayOfYear = dayOfYear + 3;
+		}else if(ticketCode == 3) {
+			expirationDayOfYear = dayOfYear + 7;
+		}else {
+			if((dayOfYear += 30) < 366) {
+				expirationDayOfYear = dayOfYear + 30;
+				
 			}else {
-				response.getWriter().print(false);
+				expirationDayOfYear = (dayOfYear + 30) - 365;
+				expirationYear++;
 			}
+		}
+		
+		RegistrationReqCarDto reqCarDto = RegistrationReqCarDto.builder()
+				.car_number(carNumber)
+				.ticket_code(ticketCode)
+				.start_year(year)
+				.start_dayOfYear(dayOfYear)
+				.start_hour(hour)
+				.end_year(expirationYear)
+				.end_dayOfYear(expirationDayOfYear)
+				.end_hour(expirationHour)
+				.build();
+		
+		try {
+			CarAllInfo haveCarInfo = carService.getCarInfoByCarNumber(carNumber);
+			if(haveCarInfo != null) {		// 이미 가지고 있는 차량 주차권 등록
+				if(carService.updateParkingTicket(reqCarDto, haveCarInfo.getCar_code())) {
+					response.getWriter().print(true);
+				}else {
+					response.getWriter().print(false);
+				}
+			}else {							// 새로운 차량 새롭게 등록
+				if(carService.registerCar(reqCarDto)) {
+					CarAllInfo carInfo = carService.getCarInfoByCarNumber(carNumber);
+					int user_code = ((User) request.getSession().getAttribute("user")).getUser_code();
+					System.out.println(user_code);
+					if(userService.createUserDtl(user_code, carInfo.getCar_code())) {
+						response.getWriter().print(true);
+					}
+				}else {
+					response.getWriter().print(false);
+				}
+			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

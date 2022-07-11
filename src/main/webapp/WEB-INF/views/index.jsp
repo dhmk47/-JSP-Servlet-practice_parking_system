@@ -76,6 +76,8 @@
 							</select>
 						</p>
 						<p class="ticket-type">주차권:&nbsp</p>
+						<button type="button" class="overtime-payment-btn">주차시간 초과 차량 결제하기</button>
+						<button type="button" class="already-register-car-btn">해당 차량 주차권 등록하기</button>
 					</div>
 					<button type="button" class="btn show-my-info-btn">내 정보 보기</button>
 				</div>
@@ -84,7 +86,7 @@
 						<h1></h1>
 						<p>지불금액:&nbsp</p>
 					</div>
-					<button type="button" class="btn pay-btn">결제하기</button>
+					<button type="button" class="btn pay-btn">주차권 결제하기</button>
 				</div>
 			</section>
 		</main>

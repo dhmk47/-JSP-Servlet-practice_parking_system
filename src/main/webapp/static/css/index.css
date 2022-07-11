@@ -257,6 +257,7 @@ button {
 }
 
 main div button {
+	cursor: pointer;
 	border-radius: 20px;
 	border-color: skyblue;
 	

@@ -6,6 +6,7 @@ import domain.dao.ServiceDao;
 import domain.dao.ServiceDaoImpl;
 import domain.entity.CarAllInfo;
 import domain.jdbc.DBConnectionMgr;
+import web.dto.RegistrationReqCarDto;
 
 public class CarServiceImpl implements CarService{
 	private final ServiceDao serviceDao;
@@ -15,8 +16,8 @@ public class CarServiceImpl implements CarService{
 	}
 
 	@Override
-	public boolean registerCar(String carNumber, int ticketCode,int year, int dayOfYear, int hour) throws Exception {
-		return serviceDao.insertCar(carNumber, ticketCode, year, dayOfYear, hour) == 2 ? true : false;
+	public boolean registerCar(RegistrationReqCarDto reqCarDto) throws Exception {
+		return serviceDao.insertCar(reqCarDto.toEntity()) == 2 ? true : false;
 	}
 
 	@Override
@@ -27,6 +28,16 @@ public class CarServiceImpl implements CarService{
 	@Override
 	public ArrayList<CarAllInfo> getCarInfoByCarCode(int carCode) throws Exception {
 		return serviceDao.getCarInfoByCarCode(carCode);
+	}
+
+	@Override
+	public boolean parkingTicketCancle(int car_code) throws Exception {
+		return serviceDao.parkingTicketCancelUpdate(car_code) != 0;
+	}
+
+	@Override
+	public boolean updateParkingTicket(RegistrationReqCarDto reqCarDto, int carCode) throws Exception {
+		return serviceDao.updateParkingTicket(reqCarDto.toEntity(), carCode) != 0;
 	}
 
 }

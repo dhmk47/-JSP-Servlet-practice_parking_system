@@ -47,6 +47,7 @@
 				<select>
 				
 				</select>
+				<span class="delete-error-msg">주차권이 아직 유효한 차량은 등록해제 할 수 없습니다.</span>
 			</div>
 			<button type="button" class="delete-car-btn">차량 등록 해제</button>
 		</main>

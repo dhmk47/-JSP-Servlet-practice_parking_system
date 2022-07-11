@@ -35,6 +35,8 @@ const showMyInfoBtn = document.querySelector(".show-my-info-btn");
 const nameInInfoBox = document.querySelector(".info-box h1");
 const showUserCarInfoSelectBox = document.querySelector(".info-box select");
 const parkingTicketType = document.querySelector(".ticket-type");
+const overtimePayButton = document.querySelector(".overtime-payment-btn");
+const alreadyRegisteredCarTicketUpdateButton = document.querySelector(".already-register-car-btn");
 
 const paymentBox = document.querySelector(".payment-box");
 const userInfoInPaymentBox = document.querySelector(".payment-box h1");
@@ -45,21 +47,76 @@ let flag2 = false;
 let flag3 = false;
 
 let loginFlag = false;
+let paymentFlag = false;
+let noParkingTicket = false;
 
 let carListObject = null;
+let carObj = null
 
+overtimePayButton.style.opacity = "0.3";
+overtimePayButton.style.cursor = "default";
+alreadyRegisteredCarTicketUpdateButton.style.opacity = "0.3";
+alreadyRegisteredCarTicketUpdateButton.style.cursor = "default";
 load();
 
 showUserCarInfoSelectBox.onchange = () => {
 	let select = showUserCarInfoSelectBox.options[showUserCarInfoSelectBox.selectedIndex].value;
-	if(select > -1){
-		parkingTicketType.innerHTML = `
-		주차권: ${carListObject[select].ticket_dtl}
-		`;
+	carObj = carListObject[select];
+	if(select > -1 && carObj.ticket_dtl != null){
+		
+		if(carObj.remaining_day < 0){
+			parkingTicketType.innerHTML = `
+			주차권: ${carObj.ticket_dtl}
+			-> 초과 일: ${carObj.remaining_day * -1}<br>초과 시간: ${carObj.remaining_hour}`;
+			overtimePayButton.style.opacity = "1";
+			overtimePayButton.style.cursor = "pointer";
+			paymentFlag = true;
+		}else {
+			parkingTicketType.innerHTML = `
+			주차권: ${carObj.ticket_dtl}
+			-> 남은 일: ${carObj.remaining_day}<br>남은 시간: ${carObj.remaining_hour}`;
+			overtimePayButton.style.opacity = "0.3";
+			overtimePayButton.style.cursor = "default";
+			paymentFlag = false;
+		}
+		
 	}else {
 		parkingTicketType.innerHTML = "주차권: ";
+		overtimePayButton.style.opacity = "0.3";
+		overtimePayButton.style.cursor = "default";
+		paymentFlag = false;
+	}
+	if(select > -1 && carObj.ticket_dtl == null){
+		alreadyRegisteredCarTicketUpdateButton.style.opacity = "1.0";
+		alreadyRegisteredCarTicketUpdateButton.style.cursor = "pointer";
+		noParkingTicket = true;
+		
+	}else {
+		alreadyRegisteredCarTicketUpdateButton.style.opacity = "0.3";
+		alreadyRegisteredCarTicketUpdateButton.style.cursor = "default";
+		noParkingTicket = false;
 	}
 	
+}
+
+overtimePayButton.onclick = () => {
+	if(paymentFlag){
+		let price = (carObj.remaining_hour + (carObj.remaining_day * -1 * 24)) * 500;
+		let flag = confirm(`지불금액: ${price}원입니다.\n지불하시겠습니까?`);
+		if(flag){
+			parkingTicketCancel();
+			alert("지불 완료!");
+		}
+	}
+}
+
+alreadyRegisteredCarTicketUpdateButton.onclick = () => {
+	if(noParkingTicket){
+		carNumberInputBox.value = carObj.car_number;
+		btnList[0].click();
+	}else{
+		alert("에러");
+	}
 }
 
 registerCarBtn.onclick = () => {
@@ -208,7 +265,6 @@ function load() {
 		dataType: "json",
 		success: (response) => {
 			if(response != null){
-				console.log(response);
 				loginFlag = true;
 				userBox.style.display = "flex";
 				loginBox.style.display = "none";
@@ -231,7 +287,7 @@ function load() {
 						}else{
 							carListObject = response;
 						
-							showUserCarInfoSelectBox.innerHTML = `<option>차량을 선택해주세요.</option>`
+							showUserCarInfoSelectBox.innerHTML = `<option value=-1>차량을 선택해주세요.</option>`
 							for(let i = 0; i < response.length; i++){
 								showUserCarInfoSelectBox.innerHTML += `
 								<option value=${i}>${response[i].car_number}</option>
@@ -261,6 +317,22 @@ function errorMessage(request, status, error) {
 	console.log(request.status);
 	console.log(request.responseText);
 	console.log(error);
+}
+
+function parkingTicketCancel() {
+	$.ajax({
+		type: "put",
+		url: `/root/api/v1/ticket/cancel?car_code=${carObj.car_code}`,
+		dataType: "text",
+		success: (response) => {
+			if(response == "true"){
+				alert("주차권이 해제되었습니다.");
+			}else{
+				alert("주차권 해제중 오류 발생.");
+			}
+		},
+		error: errorMessage
+	});
 }
 
 function btn1_click() {
