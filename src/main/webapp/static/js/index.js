@@ -106,6 +106,7 @@ overtimePayButton.onclick = () => {
 		if(flag){
 			parkingTicketCancel();
 			alert("지불 완료!");
+			location.replace("/root/index");
 		}
 	}
 }
@@ -114,8 +115,6 @@ alreadyRegisteredCarTicketUpdateButton.onclick = () => {
 	if(noParkingTicket){
 		carNumberInputBox.value = carObj.car_number;
 		btnList[0].click();
-	}else{
-		alert("에러");
 	}
 }
 

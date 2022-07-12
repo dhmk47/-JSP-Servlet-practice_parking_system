@@ -3,7 +3,12 @@ const selectBoxes = document.querySelectorAll("main select");
 
 const modifyUserInfoButton = document.querySelector(".userinfo-modify-btn");
 
+const deleteDtlMessage = document.querySelector(".delete-error-msg");
 const deleteCarButton = document.querySelector(".delete-car-btn");
+
+let select = null;
+let carObjList = null;
+let canDeleteCarFlag = false;
 
 load();
 
@@ -57,11 +62,60 @@ modifyUserInfoButton.onclick = () => {
 	});
 }
 
+selectBoxes[1].onchange = () => {
+	select = selectBoxes[1].options[selectBoxes[1].selectedIndex].value;
+	if(select > -1 && carObjList[select].ticket_code != 0){
+		deleteDtlMessage.innerHTML = "주차권이 아직 유효한 차량은 등록해제 할 수 없습니다.";
+		deleteCarButton.style.opacity = "0.3";
+		deleteCarButton.style.cursor = "default";
+		canDeleteCarFlag = false;
+	}else if(select > -1 && carObjList[select].ticket_code == 0){
+		deleteDtlMessage.innerHTML = "";
+		deleteCarButton.style.opacity = "1.0";
+		deleteCarButton.style.cursor = "pointer";
+		canDeleteCarFlag = true;
+	}else {
+		deleteDtlMessage.innerHTML = "";
+		deleteCarButton.style.opacity = "0.3";
+		deleteCarButton.style.cursor = "default";
+		canDeleteCarFlag = false;
+	}
+}
+
 deleteCarButton.onclick = () => {
-	
+	if(canDeleteCarFlag){
+		$.ajax({
+			type: "delete",
+			url: `/root/api/v1/car/delete?carCode=${carObjList[select].car_code}`,
+			dataType: "text",
+			success: (response) => {
+				if(response == "true"){
+					alert("해당 차량은 등록 해제되었습니다.");
+					$.ajax({
+						type: "get",
+						url: "/root/api/v1/load/carinfo",
+						dataType: "json",
+						success: (response) => {
+							if(response != null){
+								location.replace("/root/modifyAccountInfo");
+							}else {
+								alert("요청 실패");
+							}
+						},
+						error: errorMessage
+					})
+				}else {
+					alert("차량 등록 해제 실패.");
+				}
+			},
+			error: errorMessage
+		});
+	}
 }
 
 function load() {
+	deleteCarButton.style.opacity = "0.3";
+	deleteCarButton.style.cursor = "default";
 	$.ajax({
 		type: "get",
 		url: "/root/api/v1/userinfo/session",
@@ -78,17 +132,14 @@ function load() {
 				success: (response) => {
 					alert("자동차 정보 요청 성공");
 					
-					console.log(response);
-					console.log(response.length);
-					
 					if(response.length == 0){
-						selectBoxes[1].innerHTML = `<option>등록된 차량이 없습니다.</option>`;
+						selectBoxes[1].innerHTML = `<option value=-1>등록된 차량이 없습니다.</option>`;
 					}else {
-						selectBoxes[1].innerHTML = `<option>차량을 선택해 주세요.</option>`;
+						carObjList = response;
+						selectBoxes[1].innerHTML = `<option value=-1>차량을 선택해 주세요.</option>`;
 						for(let i = 0; i < response.length; i++){
-							console.log(response[i].car_number);
 							selectBoxes[1].innerHTML += `
-							<option>${response[i].car_number}</option>
+							<option value=${i}>${response[i].car_number}</option>
 							`;
 						}
 					}

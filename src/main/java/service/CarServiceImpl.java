@@ -40,4 +40,9 @@ public class CarServiceImpl implements CarService{
 		return serviceDao.updateParkingTicket(reqCarDto.toEntity(), carCode) != 0;
 	}
 
+	@Override
+	public boolean removeCar(int carCode) throws Exception {
+		return serviceDao.deleteCar(carCode) != 0;
+	}
+
 }

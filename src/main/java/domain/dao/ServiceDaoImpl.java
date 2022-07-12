@@ -273,13 +273,14 @@ public class ServiceDaoImpl implements ServiceDao{
 			sb.append("SELECT\r\n"
 					+ "	ud.car_code,\r\n"
 					+ "	cm.car_number,\r\n"
-					+ "	pt.ticket_dtl,\r\n"
+					+ "	cd.ticket_code,\r\n"
 					+ "	cd.start_year,\r\n"
 					+ "	cd.start_day,\r\n"
 					+ "	cd.start_hour,\r\n"
 					+ "	cd.end_year,\r\n"
 					+ "	cd.end_day,\r\n"
-					+ "	cd.end_hour\r\n"
+					+ "	cd.end_hour,\r\n"
+					+ "	pt.ticket_dtl\r\n"
 					+ "FROM\r\n"
 					+ "	user_dtl ud\r\n"
 					+ "	LEFT OUTER JOIN car_mst cm ON(cm.car_code = ud.car_code)\r\n"
@@ -294,14 +295,16 @@ public class ServiceDaoImpl implements ServiceDao{
 				CarAllInfo carInfo = CarAllInfo.builder()
 						.car_code(rs.getInt(1))
 						.car_number(rs.getString(2))
-						.ticket_dtl(rs.getString(3))
+						.ticket_code(rs.getInt(3))
 						.start_year(rs.getInt(4))
 						.start_dayOfYear(rs.getInt(5))
 						.start_hour(rs.getInt(6))
 						.end_year(rs.getInt(7))
 						.end_dayOfYear(rs.getInt(8))
 						.end_hour(rs.getInt(9))
+						.ticket_dtl(rs.getString(10))
 						.build();
+						
 				
 				carList.add(carInfo);
 			}
@@ -374,6 +377,29 @@ public class ServiceDaoImpl implements ServiceDao{
 			pstmt.setInt(7, carAllInfo.getEnd_hour());
 			pstmt.setInt(8, car_code);
 			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con, pstmt);
+		}
+		
+		return result;
+	}
+	
+	@Override
+	public int deleteCar(int car_code) throws Exception {
+		con = pool.getConnection();
+		sb = new StringBuilder();
+		
+		try {
+			sb.append("DELETE\r\n"
+					+ "FROM\r\n"
+					+ "	car_mst\r\n"
+					+ "WHERE\r\n"
+					+ "	car_code = ?");
+			pstmt = con.prepareStatement(sb.toString());
+			pstmt.setInt(1, car_code);
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

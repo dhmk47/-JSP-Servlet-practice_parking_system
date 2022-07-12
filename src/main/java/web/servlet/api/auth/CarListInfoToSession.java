@@ -2,6 +2,8 @@ package web.servlet.api.auth;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,12 +23,16 @@ public class CarListInfoToSession extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		ArrayList<CarAllInfo> carList = new ArrayList<CarAllInfo>();
+//		Object carObj = session.getAttribute("carList");
+//		List<CarAllInfo> carList = Arrays.asList((CarAllInfo) carObj);
 		
 		int size = (Integer) session.getAttribute("size");
 		
 		for(int i = 0; i < size; i++) {
 			carList.add((CarAllInfo) session.getAttribute("car" + i));
 		}
+		
+		System.out.println(carList);
 		response.setContentType("application/json;charset=UTF-8");
 		String carJsonList = new Gson().toJson(carList);
 		response.getWriter().print(carJsonList);

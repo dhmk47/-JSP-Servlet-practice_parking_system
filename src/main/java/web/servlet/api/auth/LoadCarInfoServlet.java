@@ -89,7 +89,6 @@ public class LoadCarInfoServlet extends HttpServlet {
 						remainingHour = nowHour - endHour;
 					}else {								// 현재시간이 작을 경우의 공식
 						remainingHour = (24 + nowHour - endHour) + (remainingDay * -1 * 24);
-						System.out.println(i + "번째 차량 else문 들어옴");
 					}
 				}
 				// 초과 했을 경우
@@ -101,6 +100,8 @@ public class LoadCarInfoServlet extends HttpServlet {
 				session.setAttribute("car" + i, carInfo);
 			}
 			session.setAttribute("size", carList.size());
+			
+//			session.setAttribute("carList", carList);
 			
 			// localdatetime now 로 현재 시간을 받은 다음 반복문으로 모두 set해줘서
 			// 그 값을 바탕으로 클라이언트에 뿌리는 방법?

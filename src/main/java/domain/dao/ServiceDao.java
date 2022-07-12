@@ -16,4 +16,5 @@ public interface ServiceDao {
 	public ArrayList<CarAllInfo> getCarInfoByCarCode(int car_code) throws Exception;
 	public int parkingTicketCancelUpdate(int car_code) throws Exception;
 	public int updateParkingTicket(CarAllInfo carAllInfo, int car_code) throws Exception;
+	public int deleteCar(int car_code) throws Exception;
 }

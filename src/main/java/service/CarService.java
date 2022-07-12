@@ -11,4 +11,5 @@ public interface CarService {
 	public ArrayList<CarAllInfo> getCarInfoByCarCode(int carCode) throws Exception;
 	public boolean parkingTicketCancle(int carCode) throws Exception;
 	public boolean updateParkingTicket(RegistrationReqCarDto reqCarDto, int carCode) throws Exception;
+	public boolean removeCar(int carCode) throws Exception;
 }
